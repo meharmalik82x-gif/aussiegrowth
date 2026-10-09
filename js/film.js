@@ -20,6 +20,7 @@ export function initFilm(root) {
       s.src = `/assets/video/aussie-growth-film${size}.${ext}`;
       video.appendChild(s);
     }
+    video.preload = 'auto'; // buffer the whole film ahead so playback never stalls
     video.load();
   };
   const paint = () => {
@@ -40,6 +41,6 @@ export function initFilm(root) {
     if (e.isIntersecting && wanted) play();
     else if (!e.isIntersecting) video.pause();
   }, { threshold: 0.35 }).observe(root);
-  if (!manual) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { load(); io.disconnect(); } }, { rootMargin: '500px 0px' }).observe(root);
+  if (!manual) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { load(); io.disconnect(); } }, { rootMargin: '1400px 0px' }).observe(root);
   paint();
 }

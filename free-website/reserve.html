@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pick your Monday | Aussie Growth</title>
+<meta name="description" content="Reserve your free website spot. 2 spots every Monday.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0a12">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/caveat-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="funnel">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html" aria-label="Back to the offer"><img src="/assets/aussie-growth-mark.svg" alt="" width="36" height="34">Aussie<br><b>Growth</b></a>
+  <a class="call-link" data-tel href="#">Questions? <span data-phone></span></a>
+</div></header>
+
+<main id="main" class="f-main">
+  <div class="wrap">
+    <ol class="progress" aria-label="Booking progress">
+      <li data-step="pick">Pick your Monday</li>
+      <li data-step="details">Your details</li>
+      <li data-step="confirm">Lock it in</li>
+    </ol>
+
+    <div id="already" class="panel" hidden style="margin-bottom:30px">
+      <h2 class="display d-s up" style="margin-bottom:8px">You've already got a spot.</h2>
+      <p class="mute" style="margin:0 0 16px">Your free website starts <b id="already-date"></b>. No need to book twice.</p>
+      <div class="f-actions"><a class="btn" href="fast-track.html">Continue<span class="arr" aria-hidden="true">→</span></a><button class="back" id="restart" type="button">Book a different business</button></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <section class="step-pane" id="pick" aria-labelledby="h-pick" style="padding:0">
+      <div class="f-grid">
+        <div>
+          <p class="kicker">Step 1 of 3</p>
+          <h1 class="display d-l up" id="h-pick">Pick your<br><span class="violet">Monday.</span></h1>
+          <p class="lead mute">2 free spots every Monday. That's the whole system. Book up to 4 months ahead.</p>
+          <p class="hand" style="font-size:1.7rem;color:var(--violet-ink);rotate:-2deg;margin-top:26px" aria-hidden="true">earlier Mondays go first. funny, that.</p>
+        </div>
+        <div class="panel dark">
+          <div class="cal-head">
+            <h2 id="cal-title" aria-live="polite"></h2>
+            <div class="cal-nav"><button type="button" id="prev" aria-label="Previous month">←</button><button type="button" id="next" aria-label="Next month">→</button></div>
+          </div>
+          <div class="cal" id="cal" role="grid" aria-labelledby="cal-title"></div>
+          <div class="legend"><span><i style="background:#7447ff"></i>2 spots</span><span><i style="background:var(--lime)"></i>1 left</span><span><i style="background:#ffffff33"></i>Full</span></div>
+          <div class="selbox">
+            <div class="lbl">Your start date</div>
+            <div class="when" id="when" aria-live="polite">Tap a Monday</div>
+            <p class="mute" style="margin:8px 0 16px;font-size:.9rem">Live about a month after you start.</p>
+            <button class="btn btn-block" id="to-details" type="button" disabled>Next: your details<span class="arr" aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step-pane" id="details" aria-labelledby="h-details" hidden style="padding:0">
+      <div class="f-grid">
+        <div>
+          <p class="kicker">Step 2 of 3</p>
+          <h1 class="display d-l up" id="h-details">Tell us about<br><span class="violet">your business.</span></h1>
+          <p class="lead mute">Just enough to book you in. About 30 seconds.</p>
+          <p class="mute" style="font-size:.92rem">Starting <b id="d-date"></b> · <button class="edit" type="button" data-go="pick">change</button></p>
+        </div>
+        <form class="panel" id="form" novalidate>
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
+          <div class="field"><label for="f-business">Business name</label><input id="f-business" name="business" autocomplete="organization" required aria-describedby="e-business"><span class="err" id="e-business" aria-live="polite"></span></div>
+          <div class="field"><label for="f-phone">Mobile <small>(so we can call to set things up)</small></label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="04xx xxx xxx" required aria-describedby="e-phone"><span class="err" id="e-phone" aria-live="polite"></span></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
+          <div class="field"><label for="f-website">Current website <small>(optional)</small></label><input id="f-website" name="website" inputmode="url" autocomplete="url" placeholder="yourbusiness.com.au" aria-describedby="e-website"><span class="err" id="e-website" aria-live="polite"></span></div>
+          <div class="field"><label for="f-about">What does the business do? <small>(optional, one line is fine)</small></label><textarea id="f-about" name="about" rows="2" placeholder="e.g. Electrician in Belconnen, mostly residential"></textarea></div>
+          <div class="f-actions"><button class="btn" type="submit">Review &amp; lock it in<span class="arr" aria-hidden="true">→</span></button><button class="back" type="button" data-go="pick">Back</button></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step-pane" id="confirm" aria-labelledby="h-confirm" hidden style="padding:0">
+      <div class="f-grid">
+        <div>
+          <p class="kicker">Step 3 of 3</p>
+          <h1 class="display d-l up" id="h-confirm">Lock<br><span class="violet">it in.</span></h1>
+          <p class="lead mute">Check it's right, then it's yours.</p>
+          <div class="aside-help">The deal: <b>$0</b> website fee · live in <b>about 1 month</b> · <b>3 revisions</b> · a short video testimonial after it's finished and you've seen it.</div>
+        </div>
+        <div class="panel">
+          <table class="review"><tbody id="review"></tbody></table>
+          <button class="btn btn-block" id="lock" type="button">Lock in my free spot<span class="arr" aria-hidden="true">→</span></button>
+          <div class="alert" id="lock-err" role="alert" hidden></div>
+          <div class="aside-help">Questions first? <a data-tel href="#"><span data-phone></span></a> or <a data-wa href="#" target="_blank" rel="noopener">WhatsApp us</a>.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="has-links"><nav class="site-links" aria-label="Aussie Growth">
+  <a href="/">Home</a><a href="/web-development/">Web Development</a><a href="/growth/">Growth</a><a href="/#work">Our work</a><a href="/#faqs">FAQs</a><a href="/#quote">Get a quote</a>
+</nav></footer>
+
+<script src="config.js"></script>
+<script src="funnel.js"></script>
+<script src="js/reserve-1.js"></script>
+<script src="/js/vendor/lenis.min.js"></script>
+<script type="module" src="motion.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+/* ==========================================================================
+   2026 theme layer — brings the main site in line with the $0 offer pages.
+   Loaded last on every page. Overrides tokens first, then the few places
+   that hard-code the old gold look. Delete this file to get the old site back.
+   ========================================================================== */
+@font-face { font-family: 'Archivo Flex'; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url('/assets/fonts/archivo-var.woff2') format('woff2'); }
+@font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/assets/fonts/caveat-var.woff2') format('woff2'); }
+
+:root {
+  --bg: #0c0a12;
+  --bg-2: #16131f;
+  --card: #16131f;
+  --card-2: #211c2e;
+  --text: #f3eee4;
+  --muted: #bcb5ca;
+  --line: rgba(243, 238, 228, 0.1);
+  --line-2: rgba(243, 238, 228, 0.2);
+
+  /* "gold" now means the electric violet; names kept so every component follows */
+  --gold: #7447ff;
+  --gold-lt: #a98fff;
+  --gold-dk: #5a2fe0;
+  --gold-grad: linear-gradient(176deg, #c9b8ff 0%, #a98fff 45%, #7447ff 100%);
+  --gold-glow: rgba(116, 71, 255, 0.28);
+
+  --lime: #d9f45f;
+  --cream: #f3eee4;
+  --cream-2: #e8e0d0;
+  --paper: #fffdf8;
+  --ink: #14121a;
+  --violet-ink: #5a2fe0;
+
+  --f-display: 'Archivo Flex', 'Archivo', system-ui, sans-serif;
+  --f-body: 'Archivo Flex', 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-hand: 'Caveat', ui-rounded, cursive;
+}
+body { font-stretch: 100%; }
+::selection { background: var(--lime); color: var(--ink); }
+:focus-visible { outline-color: var(--lime); }
+
+/* ---------- type: condensed, editorial ---------- */
+.display, .h2, .hl, .final-hl, .page-hero h1, .page-cta h2 {
+  font-variation-settings: 'wdth' 62; font-weight: 900; letter-spacing: -0.005em; line-height: 0.86;
+}
+.display { font-size: clamp(3rem, 9vw, 8.6rem); }
+.h2 { font-size: clamp(2.4rem, 6vw, 5.6rem); line-height: 0.88; }
+.label, .eyebrow { color: var(--gold-lt); letter-spacing: 0.16em; font-weight: 700; }
+.eyebrow i { color: var(--lime); }
+/* the italic serif aside becomes a handwritten note — same job, more personality */
+.serif { font-family: var(--f-hand); font-style: normal; font-weight: 600; color: var(--gold-lt); font-size: 1.05em; letter-spacing: 0; text-transform: none; }
+.serif-lg { font-family: var(--f-hand); font-style: normal; font-weight: 600; font-size: clamp(1.7rem, 2.8vw, 2.5rem); }
+.gold { background: none; -webkit-background-clip: initial; background-clip: initial; color: var(--gold-lt); }
+.logo-word { font-variation-settings: 'wdth' 75; font-weight: 900; }
+.logo-word b { color: var(--gold-lt); }
+
+/* ---------- buttons: violet pill + lime arrow chip ---------- */
+.btn { font-variation-settings: 'wdth' 85; font-weight: 800; letter-spacing: 0.04em; text-transform: none; font-size: 0.95rem; }
+.btn-sm { font-size: 0.85rem; }
+.btn-lg { font-size: 1.05rem; }
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-gold:hover { background: #8360ff; box-shadow: 0 14px 40px -10px var(--gold-glow); }
+.btn-gold .arrow { display: inline-grid; place-items: center; width: 2em; height: 2em; margin: -0.5em -0.9em -0.5em 0.1em; border-radius: 50%; background: var(--lime); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+.nav.is-scrolled { background: rgba(12, 10, 18, 0.66); }
+
+/* ---------- $0 nav pill + offer strip ---------- */
+.nav-offer {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 8px; border-radius: 999px;
+  background: rgba(217, 244, 95, 0.12); color: var(--lime) !important; font-weight: 700; white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(217, 244, 95, 0.35);
+}
+.nav-offer b { background: var(--lime); color: var(--ink); border-radius: 999px; padding: 2px 8px; font-size: 0.8em; }
+.nav-offer:hover { background: rgba(217, 244, 95, 0.2); }
+.menu .menu-offer { color: var(--lime); }
+
+/* ---------- cream sections (rhythm like the offer pages) ---------- */
+.trio, .unsure, .why {
+  --text: var(--ink); --muted: #5c5767; --line: rgba(20, 18, 26, 0.12); --line-2: rgba(20, 18, 26, 0.22);
+  --card: var(--paper); --card-2: #f7f2e9; --gold-lt: var(--violet-ink);
+  background: var(--cream); color: var(--ink);
+}
+.why { background: var(--cream-2); }
+.trio .label, .unsure .label, .why .label { color: var(--violet-ink); }
+.trio .gold, .unsure .gold, .why .gold, .trio .serif, .unsure .serif, .why .serif { color: var(--violet-ink); }
+
+/* ---------- handwritten notes used across the site ---------- */
+.hand { font-family: var(--f-hand); font-weight: 600; line-height: 1.05; }
+.scribble { font-family: var(--f-hand) !important; font-style: normal !important; color: #fff !important; font-weight: 600; }
+
+/* ---------- footer ---------- */
+.foot { border-top: 1px solid var(--line); }
+.foot-offer { color: var(--lime) !important; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-offer { transition: none; }
+}
+
+/* ---------- $0 offer scene ---------- */
+.offer { position: relative; background: var(--bg); }
+.offer-stage { position: relative; height: 100svh; min-height: 640px; overflow: hidden; isolation: isolate; display: flex; align-items: flex-end; }
+.offer-img { position: absolute; inset: 0; z-index: -3; }
+.offer-img img { width: 100%; height: 100%; object-fit: cover; object-position: 74% 40%; }
+.offer-after { z-index: -2; }
+.offer-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(12,10,18,.92) 0%, rgba(12,10,18,.7) 34%, rgba(12,10,18,0) 66%), linear-gradient(0deg, rgba(12,10,18,.85) 0%, rgba(12,10,18,0) 40%); }
+.offer-note { position: absolute; right: 7%; top: 18%; color: #fff; font-size: clamp(1.4rem, 2.2vw, 2.1rem); text-shadow: 0 2px 14px rgba(0,0,0,.6); rotate: 4deg; text-align: right; }
+.offer-note-b { top: auto; bottom: 12%; right: 5%; color: var(--lime); rotate: -3deg; }
+.offer-copy { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter) clamp(40px, 8vh, 90px); display: grid; gap: 22px; }
+.offer-copy .h2 { max-width: 12ch; }
+.offer-line { display: block; }
+.offer-card { position: relative; max-width: 540px; padding: 26px; border-radius: 18px; background: var(--paper); color: var(--ink); rotate: -0.8deg; box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); }
+.offer-stamp { position: absolute; right: -12px; top: -22px; rotate: 9deg; background: var(--lime); color: var(--ink); font-size: 1.7rem; padding: 2px 14px 4px; border-radius: 10px; }
+.offer-kicker { font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--violet-ink); }
+.offer-big { margin-top: 6px; font-family: var(--f-display); font-variation-settings: 'wdth' 62; font-weight: 900; text-transform: uppercase; line-height: .9; font-size: clamp(2rem, 4vw, 3rem); }
+.offer-big b { color: var(--violet-ink); }
+.offer-sub { margin: 12px 0 18px; color: #5c5767; }
+.offer-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.offer-link { font-weight: 700; color: var(--violet-ink); text-decoration: underline; text-underline-offset: 4px; }
+.offer-fine { margin-top: 14px; font-size: .85rem; color: #5c5767; }
+/* static (no GSAP / reduced motion): show the "after" frame */
+.offer:not(.is-live) .offer-before { display: none; }
+.offer:not(.is-live) [data-note="a"] { display: none; }
+@media (max-width: 800px) {
+  .offer-stage { height: auto; min-height: 0; display: block; padding-top: 58vh; }
+  .offer-img { height: 66vh; }
+  .offer-img img { object-position: 60% 30%; }
+  .offer-shade { background: linear-gradient(0deg, var(--bg) 0, var(--bg) calc(100% - 66vh), rgba(12,10,18,.75) calc(100% - 66vh + 22vh), rgba(12,10,18,0) calc(100% - 66vh + 46vh)); }
+  .offer-note { top: 90px; right: 16px; font-size: 1.25rem; }
+  .offer-note-b { top: 90px; bottom: auto; }
+  .offer-card { rotate: 0deg; }
+  .offer-stamp { right: 8px; }
+}
+
+/* ---------- fixes for cards that hard-code dark fills ---------- */
+.trio-list li { background: var(--paper); }
+.trio-list li h3 { color: var(--ink); }
+.say { background: var(--paper); color: var(--ink); }
+.say[aria-pressed='true'] { background: #efe8ff; border-color: var(--violet-ink); }
+.say[aria-pressed='true']::after { color: var(--violet-ink); }
+.verdict::before { background: radial-gradient(closest-side, rgba(116, 71, 255, 0.14), transparent); }
+
+/* one voice for asides: the handwritten note, never a faux-italic */
+:root { --f-serif: 'Caveat', ui-rounded, cursive; }
+* { font-synthesis-style: none; }
+.why-intro, .verdict, .verdict p, .panel-index b, .serif-lg, .film-note { font-style: normal; }
+.why-intro { font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.1; }
+
+/* mid-size display text: condensed but not as tight as the big headlines */
+.logo-word, .menu nav a, .mate, .who-tab .t, .verdict-reply, .why-list dt, .trio-list h3, .meta-name,
+.q-step legend, .q-done h3, .wwd-t, .flow li, .split-col h3, .cursor-tag, .cap b, .process-list b, .lost-code {
+  font-variation-settings: 'wdth' 75; font-weight: 900;
+}
+.nav.is-scrolled { background: rgba(12, 10, 18, 0.92); }
+
+/* ---------- offer band (service pages) ---------- */
+.offer-band { position: relative; isolation: isolate; overflow: hidden; padding: clamp(80px, 12vw, 160px) var(--gutter); }
+.offer-band-bg { position: absolute; inset: 0; z-index: -2; }
+.offer-band-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 75% 40%; }
+.offer-band::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(12,10,18,.95) 0%, rgba(12,10,18,.8) 40%, rgba(12,10,18,.1) 80%); }
+.offer-band-copy { max-width: var(--maxw); margin: 0 auto; display: grid; gap: 18px; }
+.offer-band-copy .h2 { max-width: 12ch; }
+.offer-band-sub { max-width: 34em; color: var(--muted); font-size: 1.1rem; }
+.offer-link-light { color: var(--lime); }
+@media (max-width: 800px) { .offer-band::before { background: linear-gradient(0deg, rgba(12,10,18,.95) 30%, rgba(12,10,18,.55)); } }
+.unsure .verdict-detail { color: #4a4555; }
+
+/* ---------- smooth scrolling (Lenis) ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+.offer-img, .offer-img img { will-change: transform, clip-path; backface-visibility: hidden; }
+
+/* ---------- gorilla mark ---------- */
+.logo-mark { width: 40px; height: 40px; }
+.loader-gorilla { width: clamp(64px, 12vw, 96px); height: auto; margin-bottom: 6px; animation: gorilla-in 0.9s var(--ease) both; }
+@keyframes gorilla-in { from { opacity: 0; transform: translateY(14px) scale(0.92); } }
+.logo:hover .logo-mark { transform: rotate(-6deg) scale(1.06); }
+.logo-mark { transition: transform 0.5s var(--ease); }
+@media (prefers-reduced-motion: reduce) { .loader-gorilla { animation: none; } .logo:hover .logo-mark { transform: none; } }
+
+/* ---------- brand lockup: AUSSIE cream / GROWTH lime ---------- */
+.logo-word b { color: var(--lime); }
+.logo-mark { width: 42px; height: 40px; object-fit: contain; }

@@ -1,0 +1,1 @@
+Funnel.guard("thanks")

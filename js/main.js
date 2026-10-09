@@ -14,6 +14,8 @@
 // race entirely, rather than papering over it with a browser/OS check.)
 import { renderWho, renderReel, renderSays, renderFaq, renderReviews } from './render.js';
 import { initStory } from './story.js';
+import { initOffer } from './offer.js';
+import { initSmooth } from './smooth.js';
 import { initReel, initVideos } from './reel.js';
 import { initQuote } from './quote.js';
 import { initFilm } from './film.js';
@@ -57,7 +59,9 @@ initPointer();
 
 if (cinematic) {
   gsap.registerPlugin(ScrollTrigger);
+  initSmooth({ gsap, ScrollTrigger });
   initStory({ gsap, ScrollTrigger, ready: loader.revealed });
+  initOffer({ gsap, ScrollTrigger });
   if (matchMedia('(min-width: 1000px)').matches) initReel($('[data-reel]'), { gsap, ScrollTrigger });
   else initVideos($('[data-reel]'));
   initFlow(ScrollTrigger);

@@ -7,7 +7,7 @@ export async function initMotion({ cinematic, ready = Promise.resolve() }) {
   const hero = [...document.querySelectorAll('.page-hero h1, .page-hero .lede, .page-hero .page-ctas')];
   let anime;
   try { anime = await import('./vendor/anime.esm.min.js'); } catch { return; } // CSS failsafe reveals the hero
-  const { animate, stagger, createSpring } = anime;
+  const { animate, stagger, spring: makeSpring } = anime;
   const rise = { opacity: [0, 1], translateY: [22, 0], duration: 900, ease: 'outExpo' };
 
   // Service-page hero: headline, lede, buttons settle in order.
@@ -43,7 +43,7 @@ export async function initMotion({ cinematic, ready = Promise.resolve() }) {
   });
 
   // FAQ: the plus icon gets a small springy press when toggled.
-  const spring = createSpring({ stiffness: 260, damping: 14 });
+  const spring = makeSpring({ stiffness: 260, damping: 14 });
   document.querySelector('[data-faq]')?.addEventListener('click', (e) => {
     const icon = e.target.closest('.faq-q')?.querySelector('.faq-icon');
     if (icon) animate(icon, { scale: [0.82, 1], duration: 500, ease: spring });

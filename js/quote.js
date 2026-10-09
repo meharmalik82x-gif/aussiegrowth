@@ -74,7 +74,7 @@ export function initQuote(form) {
     status.textContent = '';
     s.querySelector('legend').focus({ preventScroll: true });
     const top = form.getBoundingClientRect().top;
-    if (top < 0 || top > innerHeight * 0.6) form.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    if (top < 0 || top > innerHeight * 0.6) (window.__lenis ? window.__lenis.scrollTo(form, { offset: -80 }) : form.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
   };
   form.querySelector('[data-qbar]').style.transform = `scaleX(${1 / total})`;
 

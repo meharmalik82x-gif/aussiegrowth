@@ -112,6 +112,7 @@ export function initReel(root, { gsap, ScrollTrigger }) {
     if (!el) return;
     const i = Math.max(frames.indexOf(el), metas.indexOf(el.closest('.meta')));
     if (i < 0 || i === active) return;
-    window.scrollTo({ top: st.start + (st.end - st.start) * (i / (n - 1)), behavior: 'instant' });
+    const y = st.start + (st.end - st.start) * (i / (n - 1));
+    if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true }); else window.scrollTo({ top: y, behavior: 'instant' });
   });
 }

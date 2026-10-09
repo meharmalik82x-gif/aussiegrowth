@@ -29,6 +29,7 @@
   <link rel="icon" href="/assets/aussie-growth-mark-512.png" sizes="512x512" type="image/png">
   <link rel="apple-touch-icon" href="/assets/aussie-growth-mark-180.png">
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/caveat-var.woff2" crossorigin>
   <link rel="preload" as="image" href="/assets/projects/silk.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/story.css">
@@ -36,6 +37,7 @@
   <link rel="stylesheet" href="/css/work.css">
   <link rel="stylesheet" href="/css/quote.css">
   <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/css/theme.css">
 
   <script type="application/ld+json">
   {
@@ -66,6 +68,7 @@
 <body>
   <div class="loader" data-loader aria-hidden="true">
     <div class="loader-mark">
+      <img class="loader-gorilla" src="/assets/aussie-growth-mark.svg" alt="" width="96" height="96">
       <span class="logo-word">Aussie <b>Growth</b></span>
       <span class="logo-sub">Digital Marketing</span>
     </div>
@@ -75,7 +78,7 @@
 
   <header class="nav" data-nav>
     <a class="logo" href="/#top" aria-label="Aussie Growth Digital Marketing, home">
-      <img class="logo-mark" src="/assets/aussie-growth-mark-96.png" alt="" width="40" height="40">
+      <img class="logo-mark" src="/assets/aussie-growth-mark.svg" alt="" width="40" height="40">
       <span class="logo-text">
         <span class="logo-word">Aussie <b>Growth</b></span>
         <span class="logo-sub">Digital Marketing</span>
@@ -104,6 +107,7 @@
         </div>
       </div>
       <a href="/#work">Work</a>
+      <a class="nav-offer" href="/free-website/"><b>$0</b> Free website</a>
       <a href="/#faqs">FAQs</a>
       <a href="/#about">About</a>
     </nav>
@@ -124,6 +128,7 @@
       <a href="/#work">Work</a>
       <a href="/#faqs">FAQs</a>
       <a href="/#about">About</a>
+      <a href="/free-website/" class="menu-offer">$0 website →</a>
       <a href="/#quote" class="menu-gold">Get a quote →</a>
     </nav>
     <p class="menu-foot"><a href="tel:+61493721273" data-phone>Call us</a></p>
@@ -316,6 +321,20 @@
     </section>
 
     <!-- ============ FAQ ============ -->
+    <!-- ============ $0 OFFER BAND ============ -->
+    <section class="offer-band" aria-labelledby="band-title">
+      <picture class="offer-band-bg">
+        <source type="image/webp" srcset="/assets/offer/grow-1600.webp">
+        <img src="/assets/offer/grow-1600.jpg" alt="" width="1600" height="896" loading="lazy" decoding="async">
+      </picture>
+      <div class="offer-band-copy reveal">
+        <p class="label">The Monday give-back</p>
+        <h2 class="h2" id="band-title">Want to see how we build? <span class="gold">Get one for $0.</span></h2>
+        <p class="offer-band-sub">Two Australian businesses get a professional website for $0 every Monday. Same team, same standard. Live in about a month.</p>
+        <div class="offer-ctas"><a class="btn btn-gold btn-lg" href="/free-website/">Get your slot <span class="arrow" aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+
     <section class="faq" id="faqs" aria-labelledby="faq-title">
       <div class="faq-head">
         <p class="label reveal">Questions</p>
@@ -388,7 +407,7 @@
 
   <footer class="foot">
     <a class="logo" href="/#top" aria-label="Aussie Growth Digital Marketing, back to top">
-      <img class="logo-mark" src="/assets/aussie-growth-mark-96.png" alt="" width="40" height="40">
+      <img class="logo-mark" src="/assets/aussie-growth-mark.svg" alt="" width="40" height="40">
       <span class="logo-text">
         <span class="logo-word">Aussie <b>Growth</b></span>
         <span class="logo-sub">Digital Marketing</span>
@@ -396,7 +415,7 @@
     </a>
     <p class="foot-line">We make the internet less awkward for business.</p>
     <nav class="foot-links foot-services" aria-label="Services">
-      <a href="/web-development/">Web Development</a><a href="/growth/">Paid Ads</a><a href="/growth/">AI &amp; Automations</a>
+      <a class="foot-offer" href="/free-website/">$0 Website offer</a><a href="/web-development/">Web Development</a><a href="/growth/">Paid Ads</a><a href="/growth/">AI &amp; Automations</a>
     </nav>
     <nav class="foot-links" aria-label="Footer">
       <a href="/#work">Work</a><a href="/#faqs">FAQs</a><a href="/#about">About</a><a href="/#quote">Get a quote</a><a href="tel:+61493721273" data-phone>+61 493 721 273</a><a href="mailto:meharmalik2026@gmail.com" data-email>meharmalik2026@gmail.com</a>
@@ -413,6 +432,7 @@
 
   <script src="/js/vendor/gsap.min.js"></script>
   <script src="/js/vendor/ScrollTrigger.min.js"></script>
+  <script src="/js/vendor/lenis.min.js"></script>
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>

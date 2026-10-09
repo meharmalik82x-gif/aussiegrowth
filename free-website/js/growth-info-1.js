@@ -1,0 +1,1 @@
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion");setTimeout(function(){if(!window.__motion)document.documentElement.classList.remove("motion")},2500)}
