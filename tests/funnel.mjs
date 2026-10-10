@@ -43,8 +43,8 @@ async function run({ apiDown = false, mailOk = true, fast = false }) {
 let r = await run({});
 assert.equal(r.errs.length, 0, r.errs.join());
 assert.ok(r.sent.api.length >= 2 && r.sent.api[0].message.includes('FREE SPOT RESERVED'), 'reservation saved');
-assert.ok(r.sent.mail.length >= 2, 'email copies sent');
-assert.match(r.thanks, /Audit Plumbing/); console.log('  ✓ free path: reserve → keep it free → thanks (saved + emailed, incl. the "kept free" note)');
+assert.ok(r.sent.mail.some((m) => /FREE SPOT RESERVED/.test(m._subject)), 'booking email copy sent'); // the 'kept free' note is admin-only (visitor has already moved on)
+assert.match(r.thanks, /Audit Plumbing/); console.log('  ✓ free path: reserve → keep it free → thanks (saved + booking emailed)');
 
 r = await run({ fast: true });
 assert.ok(r.sent.api.some((b) => b.message.includes('FAST-TRACK')) && r.sent.api.some((b) => b.message.includes('GROWTH ADD-ON')));

@@ -56,6 +56,7 @@
   $("#prev").onclick = () => { view.setMonth(view.getMonth() - 1); renderCal(); };
   $("#next").onclick = () => { view.setMonth(view.getMonth() + 1); renderCal(); };
   renderCal(); updateWhen();
+  F.availability.then(() => { renderCal(); updateWhen(); }); // re-draw with live bookings from the server
 
   // ── Steps (hash-based, so Back works) ──
   const canShow = st => st === "pick" || (st === "details" && s.date) || (st === "confirm" && s.date && validAll(false));
@@ -137,6 +138,14 @@
       location.href = "fast-track.html";
     } catch (e) {
       console.error(e);
+      if (e.status === 409) { // that Monday filled up while they were filling in the form
+        C.BOOKED[s.date] = C.SPOTS_PER_MONDAY; s = F.set({ date: null }); renderCal(); updateWhen();
+        err.textContent = e.message + " ";
+        const pick = document.createElement("button"); pick.type = "button"; pick.className = "edit"; pick.textContent = "Pick another Monday"; pick.onclick = () => go("pick");
+        err.append(pick); err.hidden = false;
+        lock.removeAttribute("aria-busy"); lock.disabled = false; lock.firstChild.textContent = "Lock in my free spot";
+        return;
+      }
       err.innerHTML = ""; err.append("That didn't go through. Your spot isn't locked yet. Try again, or call ");
       const a = document.createElement("a"); a.href = "tel:" + C.PHONE_TEL; a.textContent = C.PHONE_DISPLAY; err.append(a, " and we'll lock it in for you.");
       // Last resort so the lead is never lost: send the booking from the visitor's own email or WhatsApp.

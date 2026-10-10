@@ -23,18 +23,17 @@
   const nextOpen = () => mondays().find(k => spotsLeft(k) > 0);
 
   // Saves to the site's quote store (shows in /admin) — that's the source of truth.
-  // An email copy goes to FORM_EMAIL on the live domain; it never blocks the visitor.
   async function send(subject, fields) {
     if (C.TEST_MODE) { console.info("[TEST_MODE] not sent:", subject, fields); await new Promise(r => setTimeout(r, 600)); return; }
     const s = get(), fast = /FAST|GROWTH/.test(subject);
     const lines = Object.entries(fields).filter(([k, v]) => !k.startsWith("_") && v).map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`);
-    // The email copy goes out in parallel. If the database is down (5xx / offline) but the
-    // email got through, the lead is safe, so the visitor carries on instead of hitting a wall.
-    const live = C.FORM_EMAIL && !/^(localhost|127\.)/.test(location.hostname);
-    const mailed = live ? fetch("https://formsubmit.co/ajax/" + encodeURIComponent(C.FORM_EMAIL), {
-      method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, keepalive: true,
-      body: JSON.stringify({ _subject: subject, _captcha: "false", _template: "table", ...fields })
-    }).then(x => x.json()).then(x => String(x.success) === "true").catch(() => false) : Promise.resolve(false);
+    // Email copy: sent once the save succeeds, or as the backup when the database is down (5xx / offline),
+    // so the lead still arrives and the visitor carries on. A refused booking (e.g. full Monday) sends nothing.
+    const mail = () => !C.FORM_EMAIL || /^(localhost|127\.)/.test(location.hostname) ? Promise.resolve(false)
+      : fetch("https://formsubmit.co/ajax/" + encodeURIComponent(C.FORM_EMAIL), {
+        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, keepalive: true,
+        body: JSON.stringify({ _subject: subject, _captcha: "false", _template: "table", ...fields })
+      }).then(x => x.json()).then(x => String(x.success) === "true").catch(() => false);
     let r = null, j = {};
     try {
       r = await fetch("/api/quote", {
@@ -49,11 +48,12 @@
       });
       j = await r.json().catch(() => ({}));
     } catch {}
-    if (r && r.ok) return;
-    if ((!r || r.status >= 500) && await mailed) return;
-    throw new Error(j.error || "Send failed (" + (r ? r.status : "offline") + ")");
+    if (r && r.ok) { mail(); return; }
+    if ((!r || r.status >= 500) && await mail()) return;
+    throw Object.assign(new Error(j.error || "Send failed (" + (r ? r.status : "offline") + ")"), { status: r ? r.status : 0 });
   }
   const leadFields = s => ({
+    slot: s.date || "-",
     name: s.name, business: s.business, email: s.email, mobile: s.phone,
     current_website: s.website || "-", what_they_do: s.about || "-",
     monday: s.date ? fmt(s.date, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "-"
@@ -88,6 +88,12 @@
     return true;
   }
 
-  window.Funnel = { C, get, set, clear, mondays, spotsLeft, nextOpen, fmt, iso, parse, money, send, leadFields, hydrate, guard };
+  // Live availability: bookings stored on the server. Pages re-render with Funnel.availability.then(...).
+  const availability = fetch("/api/availability").then(r => r.ok ? r.json() : {}).then(j => {
+    for (const [k, n] of Object.entries(j.booked || {})) C.BOOKED[k] = Math.max(C.BOOKED[k] || 0, n);
+    hydrate();
+  }).catch(() => {});
+
+  window.Funnel = { availability, C, get, set, clear, mondays, spotsLeft, nextOpen, fmt, iso, parse, money, send, leadFields, hydrate, guard };
   document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", hydrate) : hydrate();
 })();

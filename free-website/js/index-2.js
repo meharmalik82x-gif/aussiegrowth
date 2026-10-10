@@ -1,8 +1,8 @@
 (() => {
   const F = Funnel;
-  // next six Mondays, real availability from config
+  // next six Mondays with real availability
   const weeks = document.getElementById("weeks");
-  F.mondays().slice(0, 6).forEach(k => {
+  const renderWeeks = () => { weeks.textContent = ""; F.mondays().slice(0, 6).forEach(k => {
     const left = F.spotsLeft(k), d = document.createElement("div");
     d.className = "wk" + (left ? "" : " full");
     d.setAttribute("aria-label", F.fmt(k, { day: "numeric", month: "long" }) + ": " + (left ? left + " of " + F.C.SPOTS_PER_MONDAY + " spots left" : "full"));
@@ -11,7 +11,8 @@
     d.children[1].textContent = F.parse(k).getDate();
     for (let i = 0; i < F.C.SPOTS_PER_MONDAY; i++) { const p = document.createElement("span"); p.className = "pip" + (i >= left ? " taken" : ""); d.children[2].append(p); }
     weeks.append(d);
-  });
+  }); };
+  renderWeeks(); F.availability.then(renderWeeks); // config first, then live bookings from the server
   // sticky CTA on mobile once the hero is gone, hidden again at the final CTA
   const sticky = document.getElementById("sticky"), hero = document.querySelector(".hero"), fin = document.querySelector(".final");
   let pastHero = false, atFinal = false;
