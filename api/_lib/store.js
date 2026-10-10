@@ -11,9 +11,17 @@ let initPromise = null;
 
 const COLS = ['id', 'created_at', 'updated_at', 'name', 'business', 'email', 'phone', 'business_type', 'service_requested', 'budget', 'timeline', 'message', 'status', 'notes', 'source', 'page_url'];
 
+// Vercel's Storage integration may name the variable with a custom prefix (POSTGRES_URL, STORAGE_URL, ...),
+// so take DATABASE_URL first, then any env var holding a postgres:// connection string.
+function dbEnv() {
+  if (process.env.DATABASE_URL) return 'DATABASE_URL';
+  const names = Object.keys(process.env).filter((k) => /^postgres(ql)?:\/\//.test(process.env[k] || '')).sort();
+  return names.find((k) => /(^|_)(POSTGRES_)?URL$/.test(k) && !/UNPOOLED|NON_POOLING/.test(k)) || names[0] || null;
+}
+
 function getMode() {
   if (mode) return mode;
-  if (process.env.DATABASE_URL) mode = 'pg';
+  if (dbEnv()) mode = 'pg';
   else if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') mode = 'file';
   else throw Object.assign(new Error('No database configured'), { code: 'NO_DB' });
   return mode;
@@ -22,7 +30,7 @@ function getMode() {
 function getPool() {
   if (!pool) {
     const { Pool } = require('pg');
-    pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1, idleTimeoutMillis: 10000 });
+    pool = new Pool({ connectionString: process.env[dbEnv()], max: 1, idleTimeoutMillis: 10000 });
   }
   return pool;
 }
@@ -144,4 +152,4 @@ async function count(key, windowMs) {
   return parseInt(r.rows[0].n, 10);
 }
 
-module.exports = { count, insertQuote, listAll, getQuote, updateQuote, hit, init, _useTestPool, _reset };
+module.exports = { dbEnv, count, insertQuote, listAll, getQuote, updateQuote, hit, init, _useTestPool, _reset };
