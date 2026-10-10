@@ -139,6 +139,12 @@
       console.error(e);
       err.innerHTML = ""; err.append("That didn't go through. Your spot isn't locked yet. Try again, or call ");
       const a = document.createElement("a"); a.href = "tel:" + C.PHONE_TEL; a.textContent = C.PHONE_DISPLAY; err.append(a, " and we'll lock it in for you.");
+      // Last resort so the lead is never lost: send the booking from the visitor's own email or WhatsApp.
+      const msg = `Hi Aussie Growth, I'd like to lock in my free website spot.\n\nMonday: ${F.fmt(s.date)}\nName: ${s.name}\nBusiness: ${s.business}\nMobile: ${s.phone}\nEmail: ${s.email}` + (s.website ? `\nWebsite: ${s.website}` : "") + (s.about ? `\nWhat we do: ${s.about}` : "");
+      const row = document.createElement("div"); row.className = "alert-actions";
+      const mail = document.createElement("a"); mail.href = `mailto:${C.FORM_EMAIL}?subject=${encodeURIComponent("Free website spot: " + s.business)}&body=${encodeURIComponent(msg)}`; mail.textContent = "Email it to us instead";
+      const wa = document.createElement("a"); wa.href = `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg)}`; wa.target = "_blank"; wa.rel = "noopener"; wa.textContent = "WhatsApp it to us";
+      row.append(mail, wa); err.append(row);
       err.hidden = false;
       lock.removeAttribute("aria-busy"); lock.disabled = false; lock.firstChild.textContent = "Try again";
     }
