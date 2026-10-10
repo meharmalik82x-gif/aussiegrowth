@@ -5,8 +5,8 @@ When the owner asks for a change "on the live website", make it here, verify, th
 
 ## How it's wired
 - Static HTML/CSS/JS + Vercel serverless functions in `api/` (quote/booking store + admin).
-- GitHub repo: `jivesh-dahiya/aussiegrowth` (remote name here: `github`), branch `main`.
-- Vercel project (owned by the GitHub repo owner's Vercel account) auto-deploys every push to `main`.
+- GitHub repo: `meharmalik82x-gif/aussiegrowth` (remote name here: `github`), branch `main`.
+- Vercel project `aussiegrowth-website` (owner meharmalik82x@gmail.com Vercel account) auto-deploys every push to `main`.
   Other branches get Preview URLs.
 - Domain DNS: Hostinger -> Vercel. Don't touch DNS for normal changes.
 - Env vars live on Vercel only (DATABASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD_HASH, SESSION_SECRET). Never commit them.
