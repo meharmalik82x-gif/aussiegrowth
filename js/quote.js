@@ -129,6 +129,7 @@ export function initQuote(form) {
       const res = await fetch(site.formEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
       const out = await res.json().catch(() => ({}));
       if (res.ok) return done();
+      if (res.status >= 500 && await mailBackup(data)) return done();
       if (res.status === 400 && out.fields) {
         const first = Object.keys(out.fields)[0];
         const stepAt = FIELD_STEP[first] ?? at;
@@ -139,10 +140,21 @@ export function initQuote(form) {
         status.textContent = res.status === 429 ? (out.error || 'Too many requests — try again later, or call us.') : `That didn’t send. Mind trying again, or call us on ${site.phoneDisplay}?`;
       }
     } catch {
+      if (await mailBackup(data)) return done();
       status.textContent = `That didn’t send. Mind trying again, or call us on ${site.phoneDisplay}?`;
     }
     next.disabled = false;
   });
+
+  // If our database is down, email the enquiry instead so it isn't lost (live domain only).
+  async function mailBackup(data) {
+    if (/^(localhost|127\.)/.test(location.hostname)) return false;
+    const { company_site, ...fields } = data;
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(site.email), { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ _subject: 'Website quote request: ' + (data.business || data.name), _captcha: 'false', _template: 'table', ...fields }) });
+      return String((await r.json()).success) === 'true';
+    } catch { return false; }
+  }
 
   function done() {
     const name = esc(form.elements.name.value.trim().split(' ')[0]);

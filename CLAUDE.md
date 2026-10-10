@@ -25,6 +25,6 @@ When the owner asks for a change "on the live website", make it here, verify, th
 ## Change -> live checklist
 1. `git pull github main` first (someone else may have pushed).
 2. Make the change. Run locally: `PORT=5188 node scripts/dev-server.js` -> http://localhost:5188
-3. `node tests/full-journey.mjs` must print ALL CHECKS PASSED. Check desktop + mobile in a browser.
+3. With the dev server running: `node tests/full-journey.mjs` (ALL CHECKS PASSED), `node tests/funnel.mjs` (FUNNEL OK), `node tests/site-audit.mjs` (all clean; pass the live URL to audit production). Eyeball desktop + mobile.
 4. Commit, then for anything risky push a branch first for a Preview URL; otherwise `git push github main`.
 5. Verify https://www.aussiegrowth.agency after the deploy (hard refresh), then report.

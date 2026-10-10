@@ -28,24 +28,30 @@
     if (C.TEST_MODE) { console.info("[TEST_MODE] not sent:", subject, fields); await new Promise(r => setTimeout(r, 600)); return; }
     const s = get(), fast = /FAST|GROWTH/.test(subject);
     const lines = Object.entries(fields).filter(([k, v]) => !k.startsWith("_") && v).map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`);
-    const r = await fetch("/api/quote", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: s.name, business: s.business, email: s.email, phone: s.phone,
-        service: /GROWTH/.test(subject) ? "A combination" : "Web Development",
-        businessType: "Other", budget: fast ? "$1–2K" : "Not sure", timeline: fast ? "ASAP" : "Next 1–3 months",
-        message: ("[$0 WEBSITE OFFER] " + subject + "\n" + lines.join("\n")).slice(0, 2000),
-        page_url: location.href.slice(0, 200), company_site: ""
-      })
-    });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(j.error || "Send failed (" + r.status + ")");
-    if (C.FORM_EMAIL && !/^(localhost|127\.)/.test(location.hostname)) {
-      fetch("https://formsubmit.co/ajax/" + encodeURIComponent(C.FORM_EMAIL), {
-        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ _subject: subject, _captcha: "false", _template: "table", ...fields })
-      }).catch(() => {});
-    }
+    // The email copy goes out in parallel. If the database is down (5xx / offline) but the
+    // email got through, the lead is safe, so the visitor carries on instead of hitting a wall.
+    const live = C.FORM_EMAIL && !/^(localhost|127\.)/.test(location.hostname);
+    const mailed = live ? fetch("https://formsubmit.co/ajax/" + encodeURIComponent(C.FORM_EMAIL), {
+      method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, keepalive: true,
+      body: JSON.stringify({ _subject: subject, _captcha: "false", _template: "table", ...fields })
+    }).then(x => x.json()).then(x => String(x.success) === "true").catch(() => false) : Promise.resolve(false);
+    let r = null, j = {};
+    try {
+      r = await fetch("/api/quote", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          name: s.name, business: s.business, email: s.email, phone: s.phone,
+          service: /GROWTH/.test(subject) ? "A combination" : "Web Development",
+          businessType: "Other", budget: fast ? "$1–2K" : "Not sure", timeline: fast ? "ASAP" : "Next 1–3 months",
+          message: ("[$0 WEBSITE OFFER] " + subject + "\n" + lines.join("\n")).slice(0, 2000),
+          page_url: location.href.slice(0, 200), company_site: ""
+        })
+      });
+      j = await r.json().catch(() => ({}));
+    } catch {}
+    if (r && r.ok) return;
+    if ((!r || r.status >= 500) && await mailed) return;
+    throw new Error(j.error || "Send failed (" + (r ? r.status : "offline") + ")");
   }
   const leadFields = s => ({
     name: s.name, business: s.business, email: s.email, mobile: s.phone,

@@ -11,7 +11,7 @@ module.exports = String.raw`<!doctype html>
 <title>Quotations — Aussie Growth Admin</title>
 <link rel="icon" href="/assets/aussie-growth-mark-96.png" type="image/png">
 <style>
-:root{--bg:#080808;--panel:#101010;--panel2:#151515;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--text:#f4f1ea;--muted:#9a9a9a;--gold:#c9a46a;--gold-lt:#e8cf9c;--red:#d9776a}
+:root{--bg:#080808;--panel:#101010;--panel2:#151515;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--text:#f4f1ea;--muted:#9a9a9a;--gold:#d9f45f;--gold-lt:#ecfba0;--red:#d9776a}
 *{box-sizing:border-box;margin:0}
 body{background:var(--bg);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -51,7 +51,7 @@ tr.is-new .nm{font-weight:700}
 .badge{display:inline-block;font-size:.66rem;letter-spacing:.12em;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
 .badge.NEW{background:var(--gold);border-color:var(--gold);color:#0b0906}
 .badge.CONTACTED{color:#9cc4e8;border-color:rgba(156,196,232,.4)}
-.badge.IN_PROGRESS{color:var(--gold-lt);border-color:rgba(201,164,106,.5)}
+.badge.IN_PROGRESS{color:var(--gold-lt);border-color:rgba(217,244,95,.5)}
 .badge.CLOSED{color:#8fc79a;border-color:rgba(143,199,154,.4)}
 .badge.ARCHIVED{opacity:.6}
 .muted{color:var(--muted)}

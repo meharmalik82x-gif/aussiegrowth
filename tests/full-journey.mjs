@@ -209,7 +209,7 @@ async function suite(label, usePg) {
   ok('canonical / og:url on .agency, one h1, unique titles + descriptions, valid JSON-LD, no placeholders or old domain, CSP + frame headers');
 
   const sitemap = await (await j('/sitemap.xml')).text(); const robots = await (await j('/robots.txt')).text();
-  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]), [SITE + '/', SITE + '/web-development/', SITE + '/growth/']);
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]), [SITE + '/', SITE + '/web-development/', SITE + '/growth/', SITE + '/free-website/']);
   assert.ok(robots.includes('Sitemap: ' + SITE + '/sitemap.xml') && /Disallow: \/admin/.test(robots) && !/Disallow: \/\s*$/m.test(robots));
   const lost = await j('/definitely/not-here'); assert.equal(lost.status, 404); assert.match(await lost.text(), /not a page/i);
   for (const p of ['/ADMIN-SETUP.md', '/api/_lib/store.js', '/.env', '/.git/config', '/scripts/dev-server.js', '/.data/quotes.json']) assert.equal((await j(p)).status, 404, p + ' must not be served');
