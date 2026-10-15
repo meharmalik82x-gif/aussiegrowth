@@ -10,7 +10,7 @@ const ROOT = path.join(__dirname, '..');
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.webm': 'video/webm', '.mp4': 'video/mp4', '.xml': 'application/xml', '.txt': 'text/plain', '.ico': 'image/x-icon' };
 const VERCEL = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
 const HEADER_RULES = VERCEL.headers.map((h) => [new RegExp('^' + h.source + '$'), h.headers]);
-const REDIRECTS = (VERCEL.redirects || []).map((r) => [new RegExp('^' + r.source + '$'), r.destination]);
+const REDIRECTS = (VERCEL.redirects || []).filter((r) => !r.has).map((r) => [new RegExp('^' + r.source + '$'), r.destination]);
 const notFound = (res) => {
   res.statusCode = 404; res.setHeader('Content-Type', 'text/html; charset=utf-8');
   try { res.end(fs.readFileSync(path.join(ROOT, '404.html'))); } catch { res.end('Not found'); }

@@ -1,10 +1,24 @@
 # Aussie Growth
 
-> Aussie Growth is an Australian digital marketing studio. It builds websites, runs paid ads (Google, Meta, Instagram) and sets up AI and automation (CRM, instant replies, follow-up, booking) for tradies, home-service businesses and local businesses.
+> Aussie Growth is an Australian digital agency. It builds websites, runs paid ads (Google, Meta, Instagram) and sets up AI and automation (CRM, instant replies, follow-up, booking) for tradies, home-service businesses and local businesses.
 
 Official website: https://www.aussiegrowth.agency/
 Phone: +61 493 721 273
 Email: meharmalik2026@gmail.com
+Country served: Australia
+Language: English (Australia)
+
+## What Aussie Growth does
+
+- Web development: custom business websites, redesigns, landing pages, quote forms and booking systems. Mobile-first.
+- Paid ads: Google Ads, Meta Ads and Instagram Ads, with tracking, sent to pages built to turn clicks into calls.
+- AI and automation: CRM, instant replies, follow-up, booking automation, email and SMS workflows.
+- The three services work as one process: Get seen (website), Get booked (ads), Get paid (automation).
+
+## Who Aussie Growth helps
+
+- Tradies and home services: builders, electricians, plumbers, landscapers, roofers, solar, HVAC, renovations.
+- Local businesses: clinics, gyms, hospitality, automotive, retail, professional services.
 
 ## Pages
 
@@ -12,6 +26,13 @@ Email: meharmalik2026@gmail.com
 - [Web Development](https://www.aussiegrowth.agency/web-development/): business websites, redesigns, landing pages, quote and booking systems, and the build process
 - [Growth](https://www.aussiegrowth.agency/growth/): paid ads management and AI/automation services
 - [$0 Website offer](https://www.aussiegrowth.agency/free-website/): two Australian businesses get a professional website for $0 every Monday (live in about a month, 3 revisions, a short video testimonial once it is finished). Optional $1,500 fast-track gets it in about a week.
+
+## Common questions
+
+- How do I get a quote? Use the five-question quote form on the home page (about a minute). A real person replies with a recommendation and a quote.
+- Is there a long contract? No. Terms are explained before any work starts.
+- Does Aussie Growth build the website and run the ads? Yes. One team does both.
+- How long does a website take? Most small-business sites take a few weeks. Content (photos, copy, sign-off) is the main variable.
 
 ## Notes
 

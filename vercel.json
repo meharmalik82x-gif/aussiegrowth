@@ -7,6 +7,12 @@
   ],
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "aussiegrowth.agency" }],
+      "destination": "https://www.aussiegrowth.agency/$1",
+      "permanent": true
+    },
+    {
       "source": "/(package\\.json|package-lock\\.json|vercel\\.json)",
       "destination": "/404",
       "permanent": false
