@@ -2,6 +2,7 @@
 
 > Aussie Growth is an Australian digital agency. It builds websites, runs paid ads (Google, Meta, Instagram) and sets up AI and automation (CRM, instant replies, follow-up, booking) for tradies, home-service businesses and local businesses.
 
+Also written as: Aussie Growth Digital Marketing, Aussie Growth Agency, aussiegrowth.agency
 Official website: https://www.aussiegrowth.agency/
 Phone: +61 493 721 273
 Email: meharmalik2026@gmail.com
@@ -23,9 +24,20 @@ Language: English (Australia)
 ## Pages
 
 - [Home](https://www.aussiegrowth.agency/): what Aussie Growth does, featured work, FAQs and the quote form
+- [About Aussie Growth](https://www.aussiegrowth.agency/about/): the facts about the business in one place
+- [Digital agency](https://www.aussiegrowth.agency/digital-agency/): what a digital agency does and how Aussie Growth works
 - [Web Development](https://www.aussiegrowth.agency/web-development/): business websites, redesigns, landing pages, quote and booking systems, and the build process
 - [Growth](https://www.aussiegrowth.agency/growth/): paid ads management and AI/automation services
+- [Google Ads](https://www.aussiegrowth.agency/google-ads/): Google Ads management for tradies and local businesses
+- [Facebook and Instagram ads](https://www.aussiegrowth.agency/meta-ads/): Meta ads management for local reach and planned jobs
+- [AI and automation](https://www.aussiegrowth.agency/ai-automation/): CRM, instant replies, follow-up and booking automation
+- [Websites for tradies](https://www.aussiegrowth.agency/tradie-websites/): builders, electricians, plumbers, landscapers, roofers, solar, HVAC, renovations
+- [Local business marketing](https://www.aussiegrowth.agency/local-business-marketing/): clinics, gyms, hospitality, automotive, retail, professional services
 - [$0 Website offer](https://www.aussiegrowth.agency/free-website/): two Australian businesses get a professional website for $0 every Monday (live in about a month, 3 revisions, a short video testimonial once it is finished). Optional $1,500 fast-track gets it in about a week.
+
+## Full text
+
+- [llms-full.txt](https://www.aussiegrowth.agency/llms-full.txt): the full text of every page above, in one file
 
 ## Common questions
 
@@ -39,3 +51,4 @@ Language: English (Australia)
 - Portfolio projects shown on the site are real websites built by Aussie Growth.
 - Photography and the brand film on the site are illustrative, not client footage.
 - The site publishes no client testimonials, ratings or performance statistics.
+- Aussie Growth does not guarantee sales or leads.

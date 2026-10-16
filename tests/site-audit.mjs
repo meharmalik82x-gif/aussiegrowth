@@ -3,7 +3,7 @@
 // Usage: node tests/site-audit.mjs [baseUrl]   (default http://localhost:5188)
 import { chromium } from 'playwright';
 const BASE = process.argv[2] || 'http://localhost:5188';
-const PAGES = ['/', '/web-development/', '/growth/', '/free-website/', '/free-website/growth-info.html', '/free-website/reserve.html', '/admin/', '/this-page-does-not-exist'];
+const PAGES = ['/', '/web-development/', '/growth/', '/digital-agency/', '/google-ads/', '/meta-ads/', '/ai-automation/', '/tradie-websites/', '/local-business-marketing/', '/about/', '/free-website/', '/free-website/growth-info.html', '/free-website/reserve.html', '/admin/', '/this-page-does-not-exist'];
 const VIEWS = { desktop: { width: 1440, height: 900 }, phone: { width: 390, height: 844, isMobile: true, hasTouch: true } };
 const browser = await chromium.launch();
 let problems = 0;

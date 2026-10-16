@@ -26,6 +26,7 @@ const pause = (video) => { if (!video.paused) video.pause(); };
 
 /** List mode: every video manages itself by visibility. */
 export function initVideos(root) {
+  if (!root) return; // pages without a work reel (search landing pages)
   const videos = [...root.querySelectorAll('[data-video]')];
   if (!videos.length || constrained) return;
   const near = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && load(e.target)), { rootMargin: '400px 0px' });
@@ -35,6 +36,7 @@ export function initVideos(root) {
 
 /** Cinematic mode (desktop): pinned reel, every project lands in the same frame. */
 export function initReel(root, { gsap, ScrollTrigger }) {
+  if (!root) return;
   const frames = [...root.querySelectorAll('.frame')];
   const metas = [...root.querySelectorAll('.meta')];
   const videos = frames.map((f) => f.querySelector('video'));

@@ -190,6 +190,7 @@ async function suite(label, usePg) {
 
   // ---------- V2 guarantees: assets, SEO, headers, 404 ----------
   const SITE = 'https://www.aussiegrowth.agency';
+  const NEW_PAGES = ['digital-agency', 'google-ads', 'meta-ads', 'ai-automation', 'tradie-websites', 'local-business-marketing', 'about'];
   for (const [p, canon] of [['/', SITE + '/'], ['/web-development/', SITE + '/web-development/'], ['/growth/', SITE + '/growth/']]) {
     const res = await j(p); const html = await res.text();
     assert.ok(html.includes(`<link rel="canonical" href="${canon}">`), p + ' canonical');
@@ -208,8 +209,31 @@ async function suite(label, usePg) {
   assert.equal(new Set(titles).size, 3, 'unique titles'); assert.equal(new Set(descs).size, 3, 'unique descriptions');
   ok('canonical / og:url on .agency, one h1, unique titles + descriptions, valid JSON-LD, no placeholders or old domain, CSP + frame headers');
 
+  // search landing pages: built by scripts/build-seo-pages.mjs
+  const seoTitles = []; const seoDescs = [];
+  for (const slug of NEW_PAGES) {
+    const p = `/${slug}/`; const res = await j(p); assert.equal(res.status, 200, p); const html = await res.text();
+    assert.ok(html.includes(`<link rel="canonical" href="${SITE}${p}">`), p + ' canonical');
+    assert.ok(html.includes(`<meta property="og:url" content="${SITE}${p}">`), p + ' og:url');
+    assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, p + ' has exactly one h1');
+    assert.ok(!/noindex/.test(html), p + ' is indexable');
+    for (const bad of ['aussiegrowth.com.au', '0000 000 000', 'example.com', 'localhost', '127.0.0.1', 'fonts.googleapis']) assert.ok(!html.includes(bad), `${p} contains "${bad}"`);
+    assert.ok(!/content="[^"]*vercel\.app/.test(html) && !/"(url|item|@id)":"[^"]*vercel\.app/.test(html), p + ' has a vercel.app URL in SEO metadata');
+    let types = '';
+    for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) types += JSON.stringify(JSON.parse(m[1]));
+    assert.ok(types.includes('"FAQPage"') && types.includes('"BreadcrumbList"'), p + ' has FAQ + breadcrumb schema');
+    assert.match(res.headers.get('content-security-policy') || '', /script-src 'self' 'sha256-/, p + ' CSP');
+    assert.ok((html.match(/<details class="seo-q">/g) || []).length >= 5, p + ' has FAQ answers in the HTML');
+    for (const href of new Set([...html.matchAll(/href="(\/[^"#?]*)/g)].map((m) => m[1]))) assert.ok((await j(href)).status < 400, `${p} links to missing ${href}`);
+    seoTitles.push(html.match(/<title>(.*?)<\/title>/)[1]); seoDescs.push(html.match(/name="description" content="(.*?)"/)[1]);
+  }
+  assert.equal(new Set(seoTitles).size, NEW_PAGES.length, 'unique titles on landing pages'); assert.equal(new Set(seoDescs).size, NEW_PAGES.length, 'unique descriptions on landing pages');
+  ok(`${NEW_PAGES.length} search landing pages: canonical, one h1, FAQ + breadcrumb schema, FAQ text in HTML, internal links resolve, unique titles`);
+
   const sitemap = await (await j('/sitemap.xml')).text(); const robots = await (await j('/robots.txt')).text();
-  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]), [SITE + '/', SITE + '/web-development/', SITE + '/growth/', SITE + '/free-website/']);
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]), [SITE + '/', SITE + '/web-development/', SITE + '/growth/', SITE + '/free-website/', ...NEW_PAGES.map((s) => `${SITE}/${s}/`)]);
+  assert.ok(/GPTBot/.test(robots) && /ClaudeBot/.test(robots) && /PerplexityBot/.test(robots), 'robots.txt names the AI crawlers');
+  const llmsFull = await (await j('/llms-full.txt')).text(); assert.ok(llmsFull.includes('Aussie Growth') && llmsFull.includes('Google Ads'), 'llms-full.txt served');
   assert.ok(robots.includes('Sitemap: ' + SITE + '/sitemap.xml') && /Disallow: \/admin/.test(robots) && !/Disallow: \/\s*$/m.test(robots));
   const lost = await j('/definitely/not-here'); assert.equal(lost.status, 404); assert.match(await lost.text(), /not a page/i);
   for (const p of ['/ADMIN-SETUP.md', '/api/_lib/store.js', '/.env', '/.git/config', '/scripts/dev-server.js', '/.data/quotes.json']) assert.equal((await j(p)).status, 404, p + ' must not be served');
